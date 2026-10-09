@@ -1,0 +1,25 @@
+name: Build Kext
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: List project files
+        run: ls -la
+        
+      - name: Build
+        run: |
+          # Replaced xcodebuild with generic compilation
+          make Release
+          
+      - name: Upload artifact
+        uses: actions/artifact@v4
+        with:
+          name: RTL8821CEwifi-kext
+          path: build/Release/*.kext
